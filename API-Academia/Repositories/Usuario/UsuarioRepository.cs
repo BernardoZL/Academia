@@ -4,6 +4,7 @@ using AutoMapper;
 using System.Security.Cryptography;
 using API_Academia.Data.DTOs;
 using Microsoft.EntityFrameworkCore;
+using API_Academia.Data.Models;
 
 namespace API_Academia.Repositories.Usuario
 {
@@ -27,7 +28,23 @@ namespace API_Academia.Repositories.Usuario
 
             await _ContextoBancoDados.SaveChangesAsync();
 
+            UsuarioMapeado = _ContextoBancoDados.Usuario.Include( x => x.Cargo ).First( x => x.Id == UsuarioMapeado.Id);
+
             return _Mapper.Map<UserDto>(UsuarioMapeado);
+        }
+
+        public async Task<UsuarioToken?> BuscarUsuarioLogin( LoginDTO pLogin )
+        {
+            UsuarioEntidade? UsuarioBanco = await _ContextoBancoDados.Usuario.Where( x => x.Nome == pLogin.Login ).FirstOrDefaultAsync();
+
+            if( UsuarioBanco is null ) return null;
+
+            if( VerificarSenhaInformada( pLogin.Senha, UsuarioBanco.Senha))
+            {
+                return _Mapper.Map<UsuarioToken>(UsuarioBanco);
+            }
+
+            return null;
         }
 
         //public async Task RedefinirSenha(int pId, string pSenha)
