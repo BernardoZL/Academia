@@ -20,6 +20,7 @@ namespace API_Academia.BancoDados.Entidades
         [Required]
         [MaxLength(200)]
         public required string Descricao { get; set; }
+        public int DiaSemana { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
         public DateTime DataCadastro { get; set; } = DateTime.Now;

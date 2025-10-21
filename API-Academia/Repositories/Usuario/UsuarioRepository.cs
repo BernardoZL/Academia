@@ -12,7 +12,7 @@ namespace API_Academia.Repositories.Usuario
     {
         private readonly IMapper _Mapper;
         private readonly ContextoBancoDados _ContextoBancoDados;
-        public UsuarioRepository( IMapper mapper, ContextoBancoDados dbContext ) 
+        public UsuarioRepository(IMapper mapper, ContextoBancoDados dbContext)
         {
             _Mapper = mapper;
             _ContextoBancoDados = dbContext;
@@ -28,18 +28,18 @@ namespace API_Academia.Repositories.Usuario
 
             await _ContextoBancoDados.SaveChangesAsync();
 
-            UsuarioMapeado = _ContextoBancoDados.Usuario.Include( x => x.Cargo ).First( x => x.Id == UsuarioMapeado.Id);
+            UsuarioMapeado = _ContextoBancoDados.Usuario.Include(x => x.Cargo).First(x => x.Id == UsuarioMapeado.Id);
 
             return _Mapper.Map<UserDto>(UsuarioMapeado);
         }
 
-        public async Task<UsuarioToken?> BuscarUsuarioLogin( LoginDTO pLogin )
+        public async Task<UsuarioToken?> BuscarUsuarioLogin(LoginDTO pLogin)
         {
-            UsuarioEntidade? UsuarioBanco = await _ContextoBancoDados.Usuario.Where( x => x.Nome == pLogin.Login ).FirstOrDefaultAsync();
+            UsuarioEntidade? UsuarioBanco = await _ContextoBancoDados.Usuario.Where(x => x.Nome == pLogin.Login).FirstOrDefaultAsync();
 
-            if( UsuarioBanco is null ) return null;
+            if (UsuarioBanco is null) return null;
 
-            if( VerificarSenhaInformada( pLogin.Senha, UsuarioBanco.Senha))
+            if (VerificarSenhaInformada(pLogin.Senha, UsuarioBanco.Senha))
             {
                 return _Mapper.Map<UsuarioToken>(UsuarioBanco);
             }
@@ -87,5 +87,14 @@ namespace API_Academia.Repositories.Usuario
             }
             return true;
         }
+
+        public async Task<List<UserDto>> ListarAlunos()
+        {
+            var alunos = await _ContextoBancoDados.Usuario
+                .Where( x => x.IdCargo == 3)
+                .ToListAsync();
+            return _Mapper.Map<List<UserDto>>(alunos);
+        }
+
     }
 }

@@ -20,7 +20,7 @@ namespace API_Academia.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CadastrarUsuario([FromBody] TreinoDTO pTreino)
+        public async Task<IActionResult> CadastrarTreino([FromBody] TreinoDTO pTreino)
         {
             try
             {

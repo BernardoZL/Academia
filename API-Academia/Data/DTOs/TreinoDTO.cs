@@ -9,6 +9,7 @@ namespace API_Academia.Data.DTOs
         public int? Id { get; set; }
         public int IdAluno { get; set; }
         public int IdTreinador { get; set; }
+        public int DiaSemana { get; set; }
 
         [Required]
         [MaxLength(200)]

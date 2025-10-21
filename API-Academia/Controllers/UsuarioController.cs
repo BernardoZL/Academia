@@ -35,5 +35,18 @@ namespace API_Academia.Controllers
             }
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ListarAlunos()
+        {
+            try
+            {
+                return Ok(await _UsuarioRepository.ListarAlunos());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
