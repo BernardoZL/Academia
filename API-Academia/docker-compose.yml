@@ -1,27 +1,39 @@
-version: '3.8'
+version: '3.4'
 
 services:
   api:
-    build: .
-    container_name: minha-api
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5000:80"
-    environment:
-      - ConnectionStrings__DefaultConnection=Server=db;Database=MinhaBase;User=sa;Password=Teste123;
+      - "8080:80"
     depends_on:
       - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=MinhaDb;User=sa;Password=Your_password123;TrustServerCertificate=True;
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sql-server
     environment:
-      SA_PASSWORD: "Teste123"
+      SA_PASSWORD: "Your_password123"
       ACCEPT_EULA: "Y"
-      MSSQL_PID: "Express"
     ports:
       - "1433:1433"
     volumes:
-      - sql_data:/var/opt/mssql
+      - sqlvolume:/var/opt/mssql
+
+  ef-migrator:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: >
+      sh -c "dotnet tool restore &&
+             dotnet ef database update --project API-Academia.csproj"
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=MinhaDb;User=sa;Password=Your_password123;TrustServerCertificate=True;
 
 volumes:
-  sql_data:
+  sqlvolume:
