@@ -9,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using API_Academia.Utils;
 using System.Text;
 using System;
+using API_Academia.Repositories.AvaliacaoFisica;
+using API_Academia.Repositories.Treino;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,6 +97,8 @@ builder.Services.AddAuthentication(x =>
             });
 
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddTransient<IAvaliacaoFisicaRepository, AvaliacaoFisicaRepository>();
+builder.Services.AddTransient<ITreinoRepository, TreinoRepository>();
 
 var app = builder.Build();
 

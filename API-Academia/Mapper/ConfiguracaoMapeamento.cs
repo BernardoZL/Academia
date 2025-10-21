@@ -13,7 +13,20 @@ namespace API_Academia.Mapper
             CreateMap<UsuarioEntidade, CreateUserDto>().ReverseMap();
             CreateMap<UsuarioEntidade, UsuarioToken>().ReverseMap();
             CreateMap<UsuarioEntidade, UserDto>().ForMember(dest => dest.Cargo, opt => opt.MapFrom(src => src.Cargo.NomeCargo));
+
             #endregion Usuario
+
+            #region Avaliacao Fisica
+            CreateMap<AvaliacaoFisicaEntidade, AvaliacaoFisicaDTO>().ReverseMap();
+
+            #endregion Avaliacao Fisica
+
+            #region Treino
+            CreateMap<TreinoEntidade, TreinoDTO>().ReverseMap();
+
+            #endregion Treino
         }
+
+
     }
 }
