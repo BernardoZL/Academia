@@ -11,6 +11,7 @@ using System.Text;
 using System;
 using API_Academia.Repositories.AvaliacaoFisica;
 using API_Academia.Repositories.Treino;
+using API_Academia.Repositories.Presenca;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -99,6 +100,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddTransient<IAvaliacaoFisicaRepository, AvaliacaoFisicaRepository>();
 builder.Services.AddTransient<ITreinoRepository, TreinoRepository>();
+builder.Services.AddTransient<IPresencaRepository, PresencaRepository>();
 
 var app = builder.Build();
 

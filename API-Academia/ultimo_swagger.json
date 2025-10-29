@@ -163,6 +163,28 @@
         }
       }
     },
+    "/api/Presenca": {
+      "post": {
+        "tags": [
+          "Presenca"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Presenca"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Treino": {
       "post": {
         "tags": [
@@ -319,6 +341,16 @@
             "description": "Success"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     }
   },
@@ -424,6 +456,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "diaSemana": {
+            "type": "integer",
+            "format": "int32"
+          },
           "descricao": {
             "maxLength": 200,
             "minLength": 1,
@@ -451,7 +487,7 @@
   },
   "security": [
     {
-      "Bearer": [ ]
+      "Bearer": []
     }
   ]
 }
